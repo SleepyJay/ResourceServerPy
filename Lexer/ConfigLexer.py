@@ -1,19 +1,9 @@
-#!/usr/bin/python
 
 import os.path
 import re
 from Lexer.Directive import Directive
 
-
 __package__ = "Lexer.ConfigLexer"
-# format:
-    # resource directive params
-    # ==>
-    # config = {
-    #     resource: [
-    #         {directive: '', params: ''},
-    #     ],
-    # }
 
 BASE_TYPE = 'rsc'
 DEF_OPEN_STRING = '//@'
@@ -22,7 +12,6 @@ class ConfigLexer(object):
     def __init__(self, opening_string=DEF_OPEN_STRING):
         self.re_line = re.compile('{}\s?([A-Za-z._]+) (.*)'.format(opening_string))
         self.re_dots = re.compile('([^.]+)\.(.+)')
-
 
     #
     def lexFile(self, file_path):
@@ -34,12 +23,13 @@ class ConfigLexer(object):
         for line in f:
             directive = self.lexLine(line, line_num)
             if directive:
-                lexed.append(directive)
+                # We don't type END
+                # Stop looking for directives, thank you.
+                if directive.name == 'END':
+                     return lexed
+                directive.file_path = file_path
 
-            # We don't type END
-            # Stop looking for directives, thank you.
-            if directive.name == 'END':
-                 return lexed
+                lexed.append(directive)
 
     #
     def lexLine(self, line, line_num=1):

@@ -8,7 +8,7 @@ __package__ = "tests.test_configLexer"
 
 class Test_ConfigLexer(unittest.TestCase):
 	
-	def test_collectDirectives(self):
+	def test_lexLine(self):
 		lexer = ConfigLexer();
 
 		tests = [
@@ -20,12 +20,8 @@ class Test_ConfigLexer(unittest.TestCase):
 
 		for test in tests:
 			actual = lexer.lexLine(test['line'])
-
 			print "\nlexed ({}): {}".format(test['line'], str(actual))
 			self.assertEqual(str(actual), test['expected'], "{} passed ({}).".format(test['name'], actual))
-
-		
-		
 
 
 if __name__ == '__main__':

@@ -6,12 +6,14 @@ from Parser.ConfigParser import ConfigParser
 
 class Config(object):
     
-    def __init__(self, config_dir = None):
-        self.lexer = ConfigLexer(config_dir)
+    def __init__(self, resource):
+        self.resource = resource
         self.config = []
+        self.lexer = ConfigLexer
 
     #
-    def start(self, config_dir = None):
+    def start(self, options):
+        config_dir = self.resource.res_path
         if config_dir == None: return
 
         if os.path.isfile(config_dir + "config.rsc"):
