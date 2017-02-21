@@ -1,27 +1,30 @@
 #
 
-__package__ = "Parser.ConfigParser"
-
-class ConfigParser(object):
+class Parser(object):
 
     def __init__(self):
         self.classpaths = []
 
     #
     def parse(self, lexed):
-        for directive in lexed:
-            if(directive.name == 'classpath'):
-                self.classpaths.append(directive.params)
-
-            elif(directive.name == 'verbose'):
-                self.collectVerbose(directive)
-
-            elif(directive.name == 'echo'):
-                print directive.params
-
-            else:
-                # Probably want an exception here...
-                pass
+        # config = Config()
+        #
+        # for directive in lexed:
+        #     if(directive.name == 'classpath'):
+        #         self.classpaths.append(directive.params)
+        #
+        #     elif(directive.name == 'verbose'):
+        #         self.collectVerbose(directive)
+        #
+        #     elif(directive.name == 'echo'):
+        #         print directive.params
+        #
+        #     else:
+        #         # Probably want an exception here...
+        #         pass
+        #
+        # return config
+        pass
 
 
     #

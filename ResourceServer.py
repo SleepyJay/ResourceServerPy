@@ -16,8 +16,8 @@
     # handle out : handler
 
 
-from Config import Config
-from Resource import Resource
+from Lexer.ConfigLexer import ConfigLexer
+from Parser import Parser
 import os
 import re
 
@@ -28,16 +28,16 @@ RES_TYPES = {
 
 class ResourceServer(object):
     
-    def __init__(self, res_path=None, res_name=None, res_type=None):
-        if res_path:
-            if not res_name:
-                res_path, res_name, res_type = self.splitResPath(res_path)
+    # pass just res_path, or all three
+    def __init__(self, res_path, res_name=None, res_type=None):
+        if not res_name:
+            res_path, res_name, res_type = self.splitResPath(res_path)
 
-        self.resource = Resource(res_path, res_name, res_type)
+        self.res_path = res_path
+        self.res_name = res_name
+        self.res_type = res_type
 
-        self.config = Config(self.resource)
-
-    
+    #
     def splitResPath(self, res_path):
         path, file = os.path.split(res_path)
         filename, file_extension = os.path.splitext(file)
@@ -47,13 +47,28 @@ class ResourceServer(object):
             res_type = RES_TYPES[file_extension]
         return path, filename, file_extension
 
-    
+
     #
     def start(self, options=None):
         print("\nResourceServer: starting\n")
-        self.config.start(options)
+        
+        config_lexer = ConfigLexer()
+
+        if os.path.isfile(self.res_path + "local.rsc"):
+            config_lexer.lexFile(self.res_path + "local.rsc")
+
+        elif os.path.isfile(self.res_path + "config.rsc"):
+            config_lexer.lexFile(self.res_path + "config.rsc")
+
+        if options:
+            config_lexer.lexOptions(options)
+
+        lexed = config_lexer.getLexed()
+        
+        config_parser = Parser()
+        self.config = config_parser.parse(lexed)
     
-    
+
     
     
 
