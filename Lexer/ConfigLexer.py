@@ -8,7 +8,7 @@ class ConfigLexer(Lexer):
 
     #
     def buildValidDirectives(self):
-        self.valid_directives = {'classpath', 'verbose', 'echo'}
+        self.valid_directives = { 'classpath', 'verbose', 'echo' }
 
 
 

@@ -5,16 +5,17 @@ import os.path
 
 class Config(object):
     
-    def __init__(self, resource):
-        self.resource = resource
-        self.config = []
-        self.lexer = ConfigLexer
+    def __init__(self):
+        self.res_path = ''
+        self.res_name = ''
+        self.res_type = ''
+
+        self.classpaths = []
+        self.verbose = False
 
     #
-    def start(self, options):
-        config_dir = self.resource.res_path
-        if config_dir == None: return
-
+    def __repr__(self):
+        return str(self.__dict__)
 
     
     

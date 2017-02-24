@@ -6,9 +6,10 @@ from Directive import Directive
 __package__ = "Lexer"
 
 class Lexer(object):
+    
     def __init__(self):
         opening_string = self.getOpeningString()
-        self.re_directive = re.compile('{}\s?([A-Za-z._]+) (.*)'.format(opening_string))
+        self.re_directive = re.compile('{}\s?([A-Za-z._]+)\s*(.*)'.format(opening_string))
         self.re_dir_type = re.compile('([^.]+)\.(.+)')
 
         self.lexed = []
@@ -18,6 +19,15 @@ class Lexer(object):
     #
     def isValidDirectve(self, name):
         return name in self.valid_directives
+
+    #
+    def lex(self, config_path, options):
+        self.lexFile(config_path)
+
+        if options:
+            self.lexOptions(options)
+
+        return self.lexed
 
     #
     def lexFile(self, file_path):
@@ -35,6 +45,7 @@ class Lexer(object):
                 # Stop looking for directives at EOResources, thank you.
                 if directive.name == 'EOResources' or directive.name == 'EOR':
                      break
+                    
                 directive.file_path = file_path
                 self.lexed.append(directive)
             else:
@@ -65,9 +76,7 @@ class Lexer(object):
 
             directive = Directive(type, name, params, line_num)
             directive.line = line
-            directives.append(directive)
-
-        return directive
+            return directive
 
     #
     def lexOptions(self, options):
@@ -93,10 +102,6 @@ class Lexer(object):
     #
     def getBaseType(self):
         return 'rsc'
-
-    #
-    def getLexed(self):
-        return self.lexed
     
     #
     def clearLexed(self):
