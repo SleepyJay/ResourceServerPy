@@ -18,6 +18,7 @@
 from Config import Config
 from Parser.ConfigParser import ConfigParser
 from Lexer.ConfigLexer import ConfigLexer
+from Scanner import Scanner
 import os
 import re
 
@@ -82,8 +83,15 @@ class ResourceServer(object):
     
     #
     def scan(self):
-        pass
+        res_lexer = self.getResourceLexer()
+        self.scanner = Scanner(self.config)
+        self.scanner.scan(res_lexer)
+    
+    #
+    def getResourceLexer(self):
+        # TODO: base this on res_type...
         
+        pass
         
         
         

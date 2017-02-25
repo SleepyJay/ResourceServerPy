@@ -6,12 +6,13 @@ from ResourceServer import ResourceServer
 #   /resource/config/com.liquidpixels.station.Workspace.Organize.jsr
 #   /resource/js/config/com.liquidpixels.station.Workspace.Organize
 
-res_path = 'test_config/com.sleepyjay.Workspace.Main.jsr' # jsr defaults to js
+res_path = 'tests/rsconfigs/basic_config/com.sleepyjay.Workspace.Main.jsr' # jsr defaults to js
+
 rs = ResourceServer(res_path)
-
-print rs.resource
-
 rs.start()
+
+print rs.config
+
 
 
 
