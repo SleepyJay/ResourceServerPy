@@ -9,6 +9,10 @@ class Resource(object):
         self.requires = set()
         self.provides = set()
         self.file_path = ''
+        
+        # used later, in Engine
+        self.unresolved = None
+
 
     
     def __repr__(self):

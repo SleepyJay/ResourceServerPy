@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import os
-import pprint
 from Parser.SourceParser import SourceParser
 
 class Scanner(object):
@@ -14,8 +13,6 @@ class Scanner(object):
     
     #
     def scan(self, res_lexer):
-        pp = pprint.PrettyPrinter(indent=4)
-
         res_parser = SourceParser(self.config)
 
         for classpath in self.config.classpaths:
@@ -32,7 +29,7 @@ class Scanner(object):
                     lexed = res_lexer.lex(res_path)
                     
                     print( "{} /// {} => ".format(path, filename) )
-                    pp.pprint( lexed )
+                    #pp.pprint( lexed )
                     
                     resource = res_parser.parse(lexed)
                     resource.file_path = res_path
@@ -44,16 +41,4 @@ class Scanner(object):
                         self.path_map[res_path] = []
 
                     self.path_map[res_path].extend(resource.provides)
-
-        print "\nscanner reources:"
-        pp.pprint(self.resources)
-        print "\nscanner path_map:"
-        pp.pprint(self.path_map)
-
-            
-
-    
-
-
-
 

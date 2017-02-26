@@ -9,15 +9,23 @@ pp = pprint.PrettyPrinter(indent=4)
 #   /resource/config/com.liquidpixels.station.Workspace.Organize.jsr
 #   /resource/js/config/com.liquidpixels.station.Workspace.Organize
 
-res_path = 'tests/rsconfigs/basic_config/com.sleepyjay.Workspace.Main.jsr' # jsr defaults to js
+res_path = 'tests/rsconfigs/basic_config/com.sleepyjay.hamburger.jsr' # jsr defaults to js
 
 rs = ResourceServer(res_path)
 rs.start()
 
-print 
+print "res_path: '{}'".format(rs.res_path)
+
+print "\n----==Config==----"
 pp.pprint(rs.config)
 
+print "\n----==scanner.reources==----"
+pp.pprint(rs.scanner.resources)
 
+print "\n----==scanner.path_map==----"
+pp.pprint(rs.scanner.path_map)
 
+print "\n----==depEngine.dependencies==----"
+pp.pprint(rs.depEngine.dependencies)
 
 

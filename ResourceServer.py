@@ -1,27 +1,14 @@
 #!/usr/bin/python
 
-
-# Whiteboard Thunks:
-    # handle in : handler
-    # read config:
-        # lexer : lexer.config
-        # parser (common?)
-        # storage? Config.py?
-    # scan paths : scanner
-    # read rsc : lexer
-    # read files : lexer
-    # build and store res tree : parser
-    # satisfy dependencies : engine?
-    # build output : emitter
-    # handle out : handler
-
-from Config import Config
-from Parser.ConfigParser import ConfigParser
-from Lexer.ConfigLexer import ConfigLexer
-from Scanner import Scanner
-from Lexer.JSLexer import JSLexer
 import os
 import re
+
+from Parser.ConfigParser import ConfigParser
+from Lexer.ConfigLexer import ConfigLexer
+from Lexer.JSLexer import JSLexer
+from Scanner import Scanner
+from Engine import Engine
+
 
 RES_TYPES = {
     'jsr': 'js',
@@ -39,6 +26,12 @@ class ResourceServer(object):
         self.res_name = res_name
         self.res_type = res_type
 
+        self.config = None
+        self.scanner = None
+        self.depEngine = None
+
+
+
     #
     def splitResPath(self, res_path):
         path, file = os.path.split(res_path)
@@ -52,20 +45,15 @@ class ResourceServer(object):
 
     #
     def start(self, options=None):
-        print("\nResourceServer: starting\n")
-
         self.configure(options)
 
         self.scan()
 
-
-
+        dependencies = self.getDependencies()
 
 
     #
     def configure(self, options):
-        print "res_path: '{}'".format(self.res_path)
-
         config_path = self.getConfigPath()
         lexed = ConfigLexer().lex(config_path, options)
 
@@ -84,14 +72,22 @@ class ResourceServer(object):
     
     #
     def scan(self):
-        res_lexer = self.getResourceLexer()
         self.scanner = Scanner(self.config)
+        res_lexer = self.getResourceLexer()
         self.scanner.scan(res_lexer)
     
     #
     def getResourceLexer(self):
         # TODO: base this on res_type...
         return JSLexer()
+
+    #
+    def getDependencies(self):
+        self.depEngine = Engine(self.config, self.scanner.resources)
+        dependencies = self.depEngine.buildDepenencyList(self.config.res_name)
+        
+
+
         
         
         
