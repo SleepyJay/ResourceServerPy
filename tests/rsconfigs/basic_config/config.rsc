@@ -1,4 +1,9 @@
 //@ verbose
-//@ classpath foo/bar
+
+//@ classpath tests/example/food
+
+//@ echo CONFIG!
+
+//@ classpath tests/example/agents
 
 	
