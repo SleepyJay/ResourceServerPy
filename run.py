@@ -14,6 +14,7 @@ res_path = 'tests/rsconfigs/basic_config/com.sleepyjay.Workspace.Main.jsr' # jsr
 rs = ResourceServer(res_path)
 rs.start()
 
+print 
 pp.pprint(rs.config)
 
 

@@ -45,10 +45,10 @@ class Scanner(object):
 
                     self.path_map[res_path].extend(resource.provides)
 
-        # print "scanner reources:"
-        # pp.pprint(self.resources)
-        # print "scanner path_map:"
-        # pp.pprint(self.path_map)
+        print "\nscanner reources:"
+        pp.pprint(self.resources)
+        print "\nscanner path_map:"
+        pp.pprint(self.path_map)
 
             
 
