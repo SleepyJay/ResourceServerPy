@@ -11,7 +11,7 @@ class Directive(object):
         self.file_path = ''
         self.line = '' # optional
 
-    def __str__(self):
+    def __repr__(self):
          return "{}: {}, {}, '{}'".format(self.line_num, self.type, self.name, self.params)
 
     

@@ -1,8 +1,9 @@
 #
 
 from Config import Config
+from Parser import Parser
 
-class ConfigParser(object):
+class ConfigParser(Parser):
 
     def __init__(self, res_path, res_name, res_type):
         self.config = Config()

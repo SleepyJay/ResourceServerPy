@@ -12,7 +12,6 @@ class Lexer(object):
         self.re_directive = re.compile('{}\s?([A-Za-z._]+)\s*(.*)'.format(opening_string))
         self.re_dir_type = re.compile('([^.]+)\.(.+)')
 
-        self.lexed = []
         self.valid_directives = set()
         self.buildValidDirectives()
 
@@ -21,40 +20,46 @@ class Lexer(object):
         return name in self.valid_directives
 
     #
-    def lex(self, config_path, options):
-        self.lexFile(config_path)
+    def lex(self, config_path, options=None):
+        lexed = []
+        self.lexFile(config_path, lexed)
 
         if options:
             self.lexOptions(options)
 
-        return self.lexed
+        return lexed
 
     #
-    def lexFile(self, file_path):
+    def lexFile(self, file_path, lexed):
         f = open(file_path, 'r')
 
         if not f:
             # Exception?
             pass
         
-        line_num = 1
+        line_num = 0
 
         for line in f:
-            directive = self.lexDirective(line, line_num)
+            line_num += 1
+
+            if line.startswith('#'):
+                continue
+            
+            directive = self.lexDirective(line, line_num, lexed)
             if directive:
                 # Stop looking for directives at EOResources, thank you.
                 if directive.name == 'EOResources' or directive.name == 'EOR':
                      break
                     
                 directive.file_path = file_path
-                self.lexed.append(directive)
+                lexed.append(directive)
             else:
                 directives = self.lexLine(line, line_num)
                 if directives:
-                    self.lexed.extend(directives)
+                    lexed.extend(directives)
 
     #
-    def lexDirective(self, line, line_num=None):
+    def lexDirective(self, line, line_num, lexed):
         """
         This essentially both checks that we have a directive, and if so,
         returns an object based on it
@@ -82,7 +87,7 @@ class Lexer(object):
     def lexOptions(self, options):
         for key in options:
             directive = Directive(self.getBaseType(), key, options[key])
-            self.lexed.append(directive)
+            lexed.append(directive)
 
     #
     def lexLine(self, line, line_num=None):
@@ -103,9 +108,6 @@ class Lexer(object):
     def getBaseType(self):
         return 'rsc'
     
-    #
-    def clearLexed(self):
-        self.lexed = []
     
     
     

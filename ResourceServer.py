@@ -19,6 +19,7 @@ from Config import Config
 from Parser.ConfigParser import ConfigParser
 from Lexer.ConfigLexer import ConfigLexer
 from Scanner import Scanner
+from Lexer.JSLexer import JSLexer
 import os
 import re
 
@@ -90,8 +91,8 @@ class ResourceServer(object):
     #
     def getResourceLexer(self):
         # TODO: base this on res_type...
+        return JSLexer()
         
-        pass
         
         
         
