@@ -2,7 +2,7 @@
 
 import os
 import pprint
-from Parser.ResourceParser import ResourceParser
+from Parser.SourceParser import SourceParser
 
 class Scanner(object):
     
@@ -16,7 +16,7 @@ class Scanner(object):
     def scan(self, res_lexer):
         pp = pprint.PrettyPrinter(indent=4)
 
-        res_parser = ResourceParser(self.config)
+        res_parser = SourceParser(self.config)
 
         for classpath in self.config.classpaths:
             for (path,dirs,files) in os.walk(classpath):
