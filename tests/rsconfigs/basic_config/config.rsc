@@ -4,6 +4,6 @@
 
 //@ echo CONFIG!
 
-#//@ classpath tests/example/agents
+//@ classpath tests/example/agents
 
 	
