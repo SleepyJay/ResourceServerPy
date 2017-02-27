@@ -1,5 +1,5 @@
 
-//@ provides com.sleepyjay.hamburger
+//@ provides com.sleepyjay.cheeseburger
 //@ require com.sleepyjay.cheese
 //@ import com.sleepyjay.ketchup
 
