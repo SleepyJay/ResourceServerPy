@@ -1,36 +1,16 @@
 # ResourceServerPy - ToDo
 
 
-### Version 0.1 (Public Git Minimum):
-
-* Read config:
-	* //@ classpath
- 		* Use +> to separate full from relative path fragments
- 		* Use => to provide a full alias to a classpath
-	* //@ echo
-* scan paths for source 
-* Read souce:
-	* //@ import
-	* //@ require
-	* //@ echo
-	* //@ end
-* build dependency map
-* output: 
-	* as source 
-	* as list: `//@ emit list`
-* add directory handler
-* pass starting resource
-* tests:
-	* parse only given resource type
-	* get correct dependency map
-
 
 ### Version 0.2:
-* ??
+* add tests
+* add documentation
+* add handler (like a web controller with routes)
+* put starting resource as last source (unless required)
+* verbose and logging
 
 
 ### Backlog
-* verbose and logging
 * plugable lexer
 * plugable emitter
 * allow quotable classpaths
