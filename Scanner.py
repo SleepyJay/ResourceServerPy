@@ -29,7 +29,6 @@ class Scanner(object):
                     lexed = res_lexer.lex(res_path)
                     
                     print( "{} /// {} => ".format(path, filename) )
-                    #pp.pprint( lexed )
                     
                     resource = res_parser.parse(lexed)
                     resource.file_path = res_path

@@ -8,6 +8,7 @@ from Lexer.ConfigLexer import ConfigLexer
 from Lexer.JSLexer import JSLexer
 from Scanner import Scanner
 from Engine import Engine
+from Emitter.JSEmitter import JSEmitter
 
 
 RES_TYPES = {
@@ -51,6 +52,10 @@ class ResourceServer(object):
 
         dependencies = self.getDependencies()
 
+        output = self.createOutput(self.scanner.resources, dependencies)
+
+        return output
+
 
     #
     def configure(self, options):
@@ -75,6 +80,16 @@ class ResourceServer(object):
         self.scanner = Scanner(self.config)
         res_lexer = self.getResourceLexer()
         self.scanner.scan(res_lexer)
+
+    #
+    def getDependencies(self):
+        self.depEngine = Engine(self.config, self.scanner.resources)
+        return self.depEngine.buildDepenencyList(self.config.res_name)
+
+    #
+    def createOutput(self, resources, dependencies):
+        self.emitter = self.getEmitter()
+        return self.emitter.buildOutput(resources, dependencies)
     
     #
     def getResourceLexer(self):
@@ -82,13 +97,9 @@ class ResourceServer(object):
         return JSLexer()
 
     #
-    def getDependencies(self):
-        self.depEngine = Engine(self.config, self.scanner.resources)
-        dependencies = self.depEngine.buildDepenencyList(self.config.res_name)
-        
-
-
-        
+    def getEmitter(self):
+        # TODO: base this on res_type...
+        return JSEmitter(self.config)
         
         
         
