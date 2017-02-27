@@ -2,8 +2,6 @@
 
 from Lexer import Lexer
 
-__package__ = "Lexer.ConfigLexer"
-
 class ConfigLexer(Lexer):
 
     #

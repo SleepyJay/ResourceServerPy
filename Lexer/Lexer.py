@@ -3,8 +3,6 @@ import os.path
 import re
 from Directive import Directive
 
-__package__ = "Lexer"
-
 class Lexer(object):
     
     def __init__(self):
